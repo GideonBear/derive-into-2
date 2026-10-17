@@ -10,7 +10,7 @@
 //! ## Basic Usage
 //!
 //! ```rust
-//! use derive_into::Convert;
+//! use derive_into_2::Convert;
 //!
 //! #[derive(Convert)]
 //! #[convert(into(path = "Destination"))]
@@ -42,7 +42,7 @@
 //! Multiple conversion attributes can be specified for a single type:
 //!
 //! ```
-//! use derive_into::Convert;
+//! use derive_into_2::Convert;
 //!
 //! struct ApiModel {
 //!     version: String,
@@ -96,7 +96,7 @@
 //! Functions specified with `with_func` must accept a reference to the source type:
 //!
 //! ```rust
-//! use derive_into::Convert;
+//! use derive_into_2::Convert;
 //!
 //! struct ValidatedType(String);
 //!
@@ -128,7 +128,7 @@
 //! ### Option and Vec
 //!
 //! ```rust
-//! use derive_into::Convert;
+//! use derive_into_2::Convert;
 //!
 //! struct Number(u8);
 //! impl From<u8> for Number {
@@ -154,7 +154,7 @@
 //! ### HashMap
 //!
 //! ```rust
-//! use derive_into::Convert;
+//! use derive_into_2::Convert;
 //! use std::collections::HashMap;
 //!
 //! #[derive(Hash, Eq, PartialEq)]
@@ -189,7 +189,7 @@
 //! ## Enum Conversion
 //!
 //! ```rust
-//! use derive_into::Convert;
+//! use derive_into_2::Convert;
 //!
 //! #[derive(Convert)]
 //! #[convert(into(path = "TargetEnum"))]
@@ -214,5 +214,5 @@
 //! }
 //! ```
 
-pub use derive_into_error::ConvertError;
-pub use derive_into_macros::Convert;
+pub use derive_into_2_error::ConvertError;
+pub use derive_into_2_macros::Convert;

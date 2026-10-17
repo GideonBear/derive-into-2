@@ -216,7 +216,7 @@ pub(super) fn field_falliable_conversion(
     if let Some(func) = conversion_func {
         return quote_spanned! { span =>
             #named_start #func(&source).map_err(|e|
-                ::derive_into::ConvertError::CustomFunction {
+                ::derive_into_2::ConvertError::CustomFunction {
                     field: stringify!(#field_ident),
                     from_type: stringify!(#source_type),
                     to_type: stringify!(#target_type),
@@ -227,7 +227,7 @@ pub(super) fn field_falliable_conversion(
     }
 
     let map_err = quote! {
-        map_err(|e| ::derive_into::ConvertError::FieldConversion {
+        map_err(|e| ::derive_into_2::ConvertError::FieldConversion {
             field: stringify!(#field_ident),
             from_type: stringify!(#source_type),
             to_type: stringify!(#target_type),

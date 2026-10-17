@@ -1,4 +1,4 @@
-use derive_into::Convert;
+use derive_into_2::Convert;
 
 // Mimics a prost `Enumeration` enum: provides `From<MyEnum> for i32` and
 // `TryFrom<i32> for MyEnum`, but NO `From<i32> for MyEnum`. Default = variant 0.

@@ -1,10 +1,9 @@
 [package]
-name = "derive-into-macros"
+name = "derive-into-2-macros"
 version = "0.3.0"
 edition = "2024"
-authors = ["Sharon Avni <sharonavni7@gmail.com>"]
 description = "Proc-macro implementation for derive-into"
-repository = "https://github.com/sharonex/derive-into"
+repository = "https://github.com/GideonBear/derive-into-2"
 license = "MIT"
 
 [lib]

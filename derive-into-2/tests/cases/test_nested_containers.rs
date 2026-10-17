@@ -1,4 +1,4 @@
-use derive_into::Convert;
+use derive_into_2::Convert;
 use std::collections::HashMap;
 
 // Custom wrapper types
@@ -172,10 +172,7 @@ mod tests {
             scores: vec![Some(10), None, Some(20)],
         };
         let target: TargetB = source.into();
-        assert_eq!(
-            target.scores,
-            vec![Some(Score(10)), None, Some(Score(20))]
-        );
+        assert_eq!(target.scores, vec![Some(Score(10)), None, Some(Score(20))]);
     }
 
     #[test]
@@ -197,10 +194,7 @@ mod tests {
         let target: TargetC = source.into();
         assert_eq!(
             target.matrix,
-            vec![
-                vec![Score(1), Score(2)],
-                vec![Score(3), Score(4), Score(5)]
-            ]
+            vec![vec![Score(1), Score(2)], vec![Score(3), Score(4), Score(5)]]
         );
     }
 
@@ -319,7 +313,10 @@ mod tests {
             items: Some(vec!["a".to_string(), "b".to_string()]),
         };
         let target: TargetG = source.into();
-        assert_eq!(target.items, vec![Tag("a".to_string()), Tag("b".to_string())]);
+        assert_eq!(
+            target.items,
+            vec![Tag("a".to_string()), Tag("b".to_string())]
+        );
     }
 }
 

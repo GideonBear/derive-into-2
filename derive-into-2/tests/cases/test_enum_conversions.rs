@@ -1,4 +1,4 @@
-use derive_into::Convert;
+use derive_into_2::Convert;
 
 // Custom types to demonstrate type conversion in enums
 #[derive(Debug, PartialEq, Clone)]
@@ -162,13 +162,22 @@ mod wrap_unit_tests {
 
     #[test]
     fn wrap_unit_try_from() {
-        assert_eq!(AssetTask::try_from(ProtoTask::Land(())).unwrap(), AssetTask::Land);
-        assert_eq!(AssetTask::try_from(ProtoTask::Takeoff(())).unwrap(), AssetTask::Takeoff);
+        assert_eq!(
+            AssetTask::try_from(ProtoTask::Land(())).unwrap(),
+            AssetTask::Land
+        );
+        assert_eq!(
+            AssetTask::try_from(ProtoTask::Takeoff(())).unwrap(),
+            AssetTask::Takeoff
+        );
         assert_eq!(
             AssetTask::try_from(ProtoTask::Calibrate(CalibrateAirspeed {})).unwrap(),
             AssetTask::Calibrate
         );
-        assert_eq!(AssetTask::try_from(ProtoTask::Run(9)).unwrap(), AssetTask::Run(9));
+        assert_eq!(
+            AssetTask::try_from(ProtoTask::Run(9)).unwrap(),
+            AssetTask::Run(9)
+        );
     }
 }
 

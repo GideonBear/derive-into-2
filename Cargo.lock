@@ -38,24 +38,24 @@ dependencies = [
 ]
 
 [[package]]
-name = "derive-into"
+name = "derive-into-2"
 version = "0.3.0"
 dependencies = [
- "derive-into-error",
- "derive-into-macros",
+ "derive-into-2-error",
+ "derive-into-2-macros",
  "indexmap",
  "trybuild",
 ]
 
 [[package]]
-name = "derive-into-error"
+name = "derive-into-2-error"
 version = "0.3.0"
 dependencies = [
  "thiserror",
 ]
 
 [[package]]
-name = "derive-into-macros"
+name = "derive-into-2-macros"
 version = "0.3.0"
 dependencies = [
  "darling",

@@ -1,4 +1,4 @@
-use derive_into::Convert;
+use derive_into_2::Convert;
 use indexmap::IndexMap;
 use std::collections::HashMap;
 

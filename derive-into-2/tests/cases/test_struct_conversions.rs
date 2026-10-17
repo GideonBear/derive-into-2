@@ -1,4 +1,4 @@
-use derive_into::Convert;
+use derive_into_2::Convert;
 
 // Custom types to demonstrate type conversion
 #[derive(Debug, PartialEq, Default)]

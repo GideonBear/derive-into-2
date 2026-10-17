@@ -1,6 +1,8 @@
-# derive-into
+# derive-into-2
 
 A Rust derive macro for easily creating conversions between structs and enums.
+
+Fork of [derive-into](https://github.com/sharonex/derive-into)
 
 ## Features
 
@@ -21,13 +23,13 @@ Add to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-derive-into = "0.1.0"
+derive-into-2 = "0.1.0"
 ```
 
 ## Quick Start
 
 ```rust
-use derive_into::Convert;
+use derive_into_2::Convert;
 
 // Source struct with conversion attributes
 #[derive(Convert)]
@@ -166,7 +168,7 @@ The macro intelligently handles various type scenarios:
 ### Basic Struct Conversion
 
 ```rust
-use derive_into::Convert;
+use derive_into_2::Convert;
 
 #[derive(Convert)]
 #[convert(into(path = "Target"))]
@@ -190,7 +192,7 @@ let target: Target = source.into();
 The macro automatically handles conversion of inner types for `Option` and `Vec`:
 
 ```rust
-use derive_into::Convert;
+use derive_into_2::Convert;
 
 #[derive(Debug, PartialEq, Default)]
 struct Number(u8);
@@ -220,7 +222,7 @@ struct Target {
 Container types are converted recursively at every nesting level. This means types like `Option<Vec<T>>`, `Vec<Option<T>>`, `Vec<Vec<T>>`, `HashMap<K, Vec<V>>`, and any arbitrary nesting depth just work — inner types are automatically converted using their `From`/`Into`/`TryFrom`/`TryInto` implementations.
 
 ```rust
-use derive_into::Convert;
+use derive_into_2::Convert;
 use std::collections::HashMap;
 
 #[derive(Debug, PartialEq)]
@@ -258,7 +260,7 @@ struct Target {
 ### Using UnwrapOrDefault for Options
 
 ```rust
-use derive_into::Convert;
+use derive_into_2::Convert;
 
 #[derive(Convert)]
 #[convert(try_from(path = "Source"))]
@@ -285,7 +287,7 @@ assert!(target.is_err());
 ### Using Unwrap for Options
 
 ```rust
-use derive_into::Convert;
+use derive_into_2::Convert;
 
 #[derive(Convert)]
 #[convert(try_from(path = "Source"))]
@@ -312,7 +314,7 @@ assert!(target.is_err());
 ### Using Default Values
 
 ```rust
-use derive_into::Convert;
+use derive_into_2::Convert;
 
 #[derive(Convert)]
 #[convert(into(path = "Target", default))]
@@ -334,7 +336,7 @@ struct Target {
 ### Tuple Struct Conversion
 
 ```rust
-use derive_into::Convert;
+use derive_into_2::Convert;
 
 #[derive(Convert)]
 #[convert(into(path = "Target"))]
@@ -346,7 +348,7 @@ struct Target(Option<Number>, Number);
 ### Complex Nested Conversions with Scoped Attributes
 
 ```rust
-use derive_into::Convert;
+use derive_into_2::Convert;
 use std::collections::HashMap;
 
 #[derive(Convert)]
@@ -395,7 +397,7 @@ fn conversion_func(val: &ApiProduct) -> ProductError {
 ### Enum Conversion with Nested Types
 
 ```rust
-use derive_into::Convert;
+use derive_into_2::Convert;
 
 #[derive(Convert)]
 #[convert(into(path = "TargetEvent"))]
@@ -441,7 +443,7 @@ enum TargetEvent {
 You can validate the source struct before conversion using the `validate` attribute. The validation function receives a reference to the source and returns a `Result<(), String>`. If validation fails, the conversion returns an error.
 
 ```rust
-use derive_into::Convert;
+use derive_into_2::Convert;
 
 fn validate_source(source: &Source) -> Result<(), String> {
     if source.name.is_empty() {
@@ -474,7 +476,7 @@ assert!(target.is_err());
 ### Custom Conversion Functions
 
 ```rust
-use derive_into::Convert;
+use derive_into_2::Convert;
 
 #[derive(Convert)]
 #[convert(try_from(path = "ApiProduct"))]

@@ -1,4 +1,4 @@
-use derive_into::Convert;
+use derive_into_2::Convert;
 
 mod structs {
     use super::*;
@@ -25,7 +25,12 @@ mod structs {
             name: "hello".into(),
         };
         let target: Target = source.try_into().unwrap();
-        assert_eq!(target, Target { name: "hello".into() });
+        assert_eq!(
+            target,
+            Target {
+                name: "hello".into()
+            }
+        );
     }
 
     pub fn validate_fails() {

@@ -1,3 +1,3 @@
 [workspace]
-members = ["derive-into", "derive-into-macros", "derive-into-error"]
+members = ["derive-into-2", "derive-into-2-macros", "derive-into-2-error"]
 resolver = "3"

@@ -77,18 +77,20 @@ fn implement_struct_conversion(
         quote! { #target_name(#(#fields)* #default_fields) }
     };
 
-    let validate_call = validate.map(|func| quote! {
-        #func(&source).map_err(|e| ::derive_into::ConvertError::Validation {
-            from_type: stringify!(#source_name),
-            to_type: stringify!(#target_name),
-            details: format!("{}", e),
-        })?;
+    let validate_call = validate.map(|func| {
+        quote! {
+            #func(&source).map_err(|e| ::derive_into_2::ConvertError::Validation {
+                from_type: stringify!(#source_name),
+                to_type: stringify!(#target_name),
+                details: format!("{}", e),
+            })?;
+        }
     });
 
     Ok(if method.is_falliable() {
         quote! {
             impl TryFrom<#source_name> for #target_name {
-                type Error = ::derive_into::ConvertError;
+                type Error = ::derive_into_2::ConvertError;
                 fn try_from(source: #source_name) -> Result<#target_name, Self::Error> {
                     #validate_call
                     Ok(#inner)

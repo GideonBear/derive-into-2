@@ -1,10 +1,9 @@
 [package]
-name = "derive-into-error"
+name = "derive-into-2-error"
 version = "0.3.0"
 edition = "2024"
-authors = ["Sharon Avni <sharonavni7@gmail.com>"]
 description = "Error types for derive-into conversions"
-repository = "https://github.com/sharonex/derive-into"
+repository = "https://github.com/GideonBear/derive-into-2"
 license = "MIT"
 
 [dependencies]
