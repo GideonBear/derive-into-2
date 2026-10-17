@@ -1,0 +1,75 @@
+name: Rust CI
+
+on:
+  pull_request:
+  push:
+    branches: [ "main" ]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    shell: bash
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  format:
+    name: Format (cargo fmt)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - run: rustup component add rustfmt
+
+      - name: cargo fmt
+        run: cargo fmt --all -- --check
+
+  main:
+    needs: [ format ]
+    name: ${{ matrix.target_name }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - target_name: Linux
+            target: x86_64-unknown-linux-gnu
+            os: ubuntu-latest
+
+          # TODO
+          # - target_name: Windows
+          #   target: x86_64-pc-windows-msvc
+          #   os: windows-latest
+
+          # TODO
+          # - target_name: macOS-aarch64
+          #   target: aarch64-apple-darwin
+          #   os: macos-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2
+        with:
+          key: ${{ matrix.target }}
+
+      - run: rustup component add clippy
+
+      - name: Print toolchain version
+        run: rustc --version
+
+      - name: cargo clippy
+        run: cargo clippy --locked --all-features -- --deny warnings
+
+      # Lint tests seperately, since `--tests` ignores any `cfg(not(test))` code, and "unused"s can slip by
+      - name: cargo clippy --tests
+        run: cargo clippy --locked --all-features --tests -- --deny warnings
+
+      - name: cargo test
+        run: cargo test --locked

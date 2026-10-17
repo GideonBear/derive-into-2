@@ -1,0 +1,19 @@
+name: Build release assets
+
+on:
+  repository_dispatch:
+    types: [release-created]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    env:
+      tag: ${{ github.event.client_payload.tag }}
+    permissions:
+      contents: write # `gh release edit`
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - name: Publish release
+        run: gh release edit "$tag" --draft=false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
