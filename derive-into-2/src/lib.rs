@@ -1,6 +1,6 @@
-//! # derive-into
+//! # derive-into-2
 //!
-//! For more information, visit the [github repository](https://github.com/sharonex/derive-into).
+//! For more information, visit the [github repository](https://github.com/GideonBear/derive-into-2).
 //!
 //! A derive macro for creating conversions between structs and enums with similar structures.
 //!
