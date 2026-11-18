@@ -1,6 +1,6 @@
 [package]
 name = "derive-into-2"
-version = "0.3.1"
+version = "0.3.2"
 edition = "2024"
 description = "A Rust derive macro for easily creating conversions between structs and enums"
 readme = "../README.md"
@@ -11,13 +11,13 @@ categories = ["development-tools", "rust-patterns"]
 documentation = "https://docs.rs/derive-into-2"
 
 [dependencies]
-derive-into-2-macros = { path = "../derive-into-2-macros", version = "0.3.0" }
+derive-into-2-macros = { path = "../derive-into-2-macros", version = "0.3.1" }
 derive-into-2-error = { path = "../derive-into-2-error", version = "0.3.0" }
 
 [dev-dependencies]
 trybuild = "=1.0.125"
 indexmap = { version = "=2.14.2" }
-derive-into-2-macros = { path = "../derive-into-2-macros", version = "0.3.0", features = ["indexmap"] }
+derive-into-2-macros = { path = "../derive-into-2-macros", version = "0.3.1", features = ["indexmap"] }
 
 [features]
 indexmap = ["derive-into-2-macros/indexmap"]
