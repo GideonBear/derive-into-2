@@ -1,75 +1,51 @@
-name: Rust CI
+name: CI
 
 on:
-  pull_request:
   push:
-    branches: [ "main" ]
+    branches: [main]
+  pull_request:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-permissions:
-  contents: read
-
-defaults:
-  run:
-    shell: bash
-
 env:
   CARGO_TERM_COLOR: always
+  RUSTFLAGS: -D warnings
 
 jobs:
-  format:
-    name: Format (cargo fmt)
+  fmt:
+    name: Format
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt
+      - run: cargo fmt --all --check
 
-      - run: rustup component add rustfmt
+  clippy:
+    name: Clippy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo clippy --workspace --all-targets --all-features -- -D warnings
 
-      - name: cargo fmt
-        run: cargo fmt --all -- --check
-
-  main:
-    needs: [ format ]
-    name: ${{ matrix.target_name }}
-    runs-on: ${{ matrix.os }}
+  test:
+    name: Test (${{ matrix.features }})
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - target_name: Linux
-            target: x86_64-unknown-linux-gnu
-            os: ubuntu-latest
-
-          # TODO
-          # - target_name: Windows
-          #   target: x86_64-pc-windows-msvc
-          #   os: windows-latest
-
-          # TODO
-          # - target_name: macOS-aarch64
-          #   target: aarch64-apple-darwin
-          #   os: macos-latest
+        features: ["", "--all-features"]
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-
-      - uses: Swatinem/rust-cache@d1527c8f67ef9af357290475d4af4b0fab8f12e0 # v2
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
         with:
-          key: ${{ matrix.target }}
-
-      - run: rustup component add clippy
-
-      - name: Print toolchain version
-        run: rustc --version
-
-      - name: cargo clippy
-        run: cargo clippy --locked --all-features -- --deny warnings
-
-      # Lint tests seperately, since `--tests` ignores any `cfg(not(test))` code, and "unused"s can slip by
-      - name: cargo clippy --tests
-        run: cargo clippy --locked --all-features --tests -- --deny warnings
-
-      - name: cargo test
-        run: cargo test --locked
+          key: ${{ matrix.features }}
+      - run: cargo test --workspace ${{ matrix.features }}
